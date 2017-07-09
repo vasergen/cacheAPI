@@ -49,7 +49,7 @@ function getByKey(req, res, next) {
     const {key} = req.params
     CacheModel.findByKey(key)
         .then((data) => {
-            if (data) {
+            if (data && !data.isTTLExided()) {
                 logger.info('Cache hit')
                 return CacheModel.updateByKey(key, data) // update TTL
             }
@@ -65,7 +65,7 @@ function getByKey(req, res, next) {
                 return next(new httpErrors.BadRequest(error.message))
             }
 
-            return cache.save() // save
+            return CacheModel.updateByKey(key, cache.toObject())
         })
         .then((cache) => {
             return res.json({
