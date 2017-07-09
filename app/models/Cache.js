@@ -3,6 +3,7 @@
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 
+
 const CacheSchema = new Schema({
     key: {
         type: String,
@@ -17,10 +18,15 @@ const CacheSchema = new Schema({
         max: 1000,
     },
     TTL: {
-        type: Date, // TODO: !!!
+        type: Date,
+        required: true,
     },
 })
 
 CacheSchema.statics.findByKey = function(key = '') {
-    return this.find({key: key})
+    return this.findOne({key: key})
 }
+
+const CacheModel = mongoose.model('Cache', CacheSchema)
+
+module.exports = CacheModel
