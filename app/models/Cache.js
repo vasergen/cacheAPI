@@ -2,7 +2,8 @@
 
 const mongoose = require('mongoose')
 const Schema = mongoose.Schema
-
+const config = require('config')
+const cacheConfig = config.get('cache')
 
 const CacheSchema = new Schema({
     key: {
@@ -37,7 +38,9 @@ CacheSchema.statics.updateByKey = function(key = '', data) {
 const CacheModel = mongoose.model('Cache', CacheSchema)
 
 function getTTL() {
-    return Date.now()
+    const {ttlMS} = cacheConfig
+    const now = new Date()
+    return new Date(now.getTime() + Number.parseInt(ttlMS))
 }
 
 module.exports = CacheModel
