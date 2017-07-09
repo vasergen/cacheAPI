@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "export NODE_ENV=dev || set NODE_ENV=dev npm run lint && node app/api.js | ./node_modules/.bin/bunyan",
-    "test": "export NODE_ENV=test || set NODE_ENV=test npm run test-unit && npm run test-e2e",
+    "test": "export NODE_ENV=test || set NODE_ENV=test npm run test-unit && npm run test-e2e | ./node_modules/.bin/bunyan",
     "lint": "./node_modules/.bin/eslint app",
     "lintfix": "./node_modules/.bin/eslint app --fix",
     "test-unit": "./node_modules/mocha/bin/mocha app/test/unit/",

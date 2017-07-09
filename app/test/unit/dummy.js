@@ -6,6 +6,6 @@ describe('#randomString()', () => {
     it('should return random string', () => {
         const strA = randomString()
         const strB = randomString()
-        expect(strA).toNotEqual(expected)
+        expect(strA).toNotEqual(strB)
     })
 })

@@ -21,7 +21,9 @@
         "no-undef": "error",
         "prefer-arrow-callback": "warn",
         "require-jsdoc": "off",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "valid-jsdoc": "off",
+        "max-len": "off"
     },
     "globals": {
         "process": true,
