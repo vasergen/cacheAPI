@@ -7,7 +7,7 @@ const logger = require('./../service/logger')
 
 /**
  * Check old cache middleware, exec checkOldCache only when reqCheckNum % whipeCount == 0
- * This is done like that to not do this every request
+ * This is done like that to not do this opeartion every request
  * @param {*} req
  * @param {*} res
  * @param {*} next

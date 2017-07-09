@@ -10,6 +10,7 @@
     "port": 3000,
     "cache": {
         "maxItemCount": 10,
+        "whipeCount": 5,
         "ttlMS": 1000
     }
 }
