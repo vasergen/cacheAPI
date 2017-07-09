@@ -1,0 +1,35 @@
+{
+    "extends": "google",
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es6": true
+    },
+    "parserOptions": {
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": ["warn", 4],
+        "linebreak-style": ["warn", "unix"],
+        "quotes": ["warn", "single"],
+        "semi": ["warn", "never"],
+        "new-cap": "off",
+        "no-var": "warn",
+        "prefer-const": "warn",
+        "eol-last": "off",
+        "no-console": "warn",
+        "no-undef": "error",
+        "prefer-arrow-callback": "warn",
+        "require-jsdoc": "off",
+        "no-unused-vars": "warn"
+    },
+    "globals": {
+        "process": true,
+        "describe": true,
+        "it": true,
+        "before": true,
+        "after": true,
+        "beforeEach": true,
+        "afterEach": true
+    }
+}
