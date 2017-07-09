@@ -6,25 +6,29 @@ const expect = require('expect')
 const server = require('./../../server')
 const CacheModel = require('./../../models/Cache')
 
-describe('# PUT /cache/key', () => {
+describe('# DELETE /cache/key', () => {
     before(server.start)
     beforeEach(() => {
-        return CacheModel.remove({})
+        return CacheModel.remove({}).then(() => {
+            const cacheA = new CacheModel({
+                key: 'a',
+                data: 'a',
+            })
+
+            return cacheA.save()
+        })
     })
     after(server.stop)
 
-    it('should insert cache if key doesnt exist', (done) => {
+    it('should not delete cache by wrong key', (done) => {
         request(server.app)
-            .put('/cache/some_key').send({
-                data: 'some_data',
-            })
+            .delete('/cache/BadKey')
             .expect('Content-Type', /json/)
             .expect(200, (err, res) => {
                 if (err) {
                     done(err)
                 }
-                const data = res.body.data
-                expect(data).toEqual('some_data')
+
                 CacheModel.count()
                     .then((count) => {
                         expect(count).toEqual(1)
@@ -34,22 +38,18 @@ describe('# PUT /cache/key', () => {
             })
     })
 
-    it('should update cache if key exist', (done) => {
+    it('should delete cache by key', (done) => {
         request(server.app)
-            .put('/cache/some_key').send({
-                data: 'some_data_2',
-            })
+            .delete('/cache/a')
             .expect('Content-Type', /json/)
             .expect(200, (err, res) => {
                 if (err) {
                     done(err)
                 }
-                const data = res.body.data
-                expect(data).toEqual('some_data_2')
 
                 CacheModel.count()
                     .then((count) => {
-                        expect(count).toEqual(1)
+                        expect(count).toEqual(0)
                         done()
                     })
                     .catch(done)

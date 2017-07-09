@@ -9,8 +9,8 @@
     },
     "port": 3000,
     "cache": {
-        "maxItemCount": 10,
-        "whipeCount": 5,
+        "maxItemCount": 5,
+        "whipeCount": 2,
         "ttlMS": 1000
     }
 }

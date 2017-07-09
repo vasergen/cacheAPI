@@ -6,7 +6,7 @@ const expect = require('expect')
 const server = require('./../../server')
 const CacheModel = require('./../../models/Cache')
 
-describe('# GET /cache', () => {
+describe('# DELETE /cache', () => {
     before(server.start)
     beforeEach(() => {
         return CacheModel.remove({}).then(() =>{
