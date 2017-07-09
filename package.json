@@ -4,7 +4,8 @@
   "description": "cache API",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "npm run lint && node app/api.js | ./node_modules/.bin/bunyan",
+    "test": "npm run test-unit && npm run test-e2e",
     "lint": "./node_modules/.bin/eslint app",
     "lintfix": "./node_modules/.bin/eslint app --fix",
     "test-unit": "./node_modules/mocha/bin/mocha app/test/unit/",
