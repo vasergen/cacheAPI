@@ -38,10 +38,8 @@ CacheSchema.statics.updateByKey = function(key = '', data) {
 CacheSchema.methods.isTTLExided = function(cb) {
     const now = new Date()
     const ttl = new Date(this.TTL)
-    console.log('now', now.getTime())
-    console.log('this.TTL', ttl)
     return now.getTime() > ttl.getTime()
-};
+}
 
 const CacheModel = mongoose.model('Cache', CacheSchema)
 
