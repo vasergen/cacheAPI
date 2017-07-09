@@ -5,6 +5,7 @@ const httpErrors = require('http-errors')
 const logger = require('./../service/logger')
 
 function getAll(req, res, next) {
+    logger.error('TODO!!!')
     res.json({
         test: true,
     })
