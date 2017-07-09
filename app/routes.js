@@ -13,7 +13,7 @@ apiRoutes.use(bodyParser.urlencoded({extended: true}))
 apiRoutes.use(bodyParser.json())
 
 // Routes
-apiRoutes.get('/cache', cacheController.getAll)
+apiRoutes.get('/cache', cacheController.getAllKeys)
 apiRoutes.delete('/cache', cacheController.deleteAll)
 
 apiRoutes.get('/cache/:key', cacheController.getByKey)

@@ -5,7 +5,14 @@ const httpErrors = require('http-errors')
 const logger = require('./../service/logger')
 const randomString = require('./../helpers/randomString')
 
-function getAll(req, res, next) {
+/**
+ * Return all keys for cache
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ *
+ */
+function getAllKeys(req, res, next) {
     CacheModel.find({})
         .then((data) => {
             const keys = data.map((item) => item.key)
@@ -16,6 +23,12 @@ function getAll(req, res, next) {
         .catch(next)
 }
 
+/**
+ * Remove all cache
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 function deleteAll(req, res, next) {
     CacheModel.remove({})
         .then((responce) => {
@@ -26,6 +39,12 @@ function deleteAll(req, res, next) {
         .catch(next)
 }
 
+/**
+ * Get cache by key
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 function getByKey(req, res, next) {
     const {key} = req.params
     CacheModel.findByKey(key)
@@ -56,6 +75,13 @@ function getByKey(req, res, next) {
         .catch(next)
 }
 
+/**
+ * Update cache by key
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ * @return {json}
+ */
 function updateByKey(req, res, next) {
     const {key} = req.params
     const {data} = req.body
@@ -70,7 +96,8 @@ function updateByKey(req, res, next) {
         return next(new httpErrors.BadRequest(error.message))
     }
 
-    return CacheModel.updateByKey(key, cache.toObject())
+    CacheModel
+        .updateByKey(key, cache.toObject())
         .then((cache) => {
             return res.json({
                 data: cache.data,
@@ -79,9 +106,15 @@ function updateByKey(req, res, next) {
         .catch(next)
 }
 
+/**
+ * Delete cache by key
+ * @param {*} req
+ * @param {*} res
+ * @param {*} next
+ */
 function deleteByKey(req, res, next) {
     const {key} = req.params
-    return CacheModel.remove({key: key})
+    CacheModel.remove({key: key})
         .then((responce) => {
             res.json({
                 data: responce,
@@ -91,7 +124,7 @@ function deleteByKey(req, res, next) {
 }
 
 // Exports
-module.exports.getAll = getAll
+module.exports.getAllKeys = getAllKeys
 module.exports.deleteAll = deleteAll
 module.exports.getByKey = getByKey
 module.exports.updateByKey = updateByKey
