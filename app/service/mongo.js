@@ -2,6 +2,7 @@
 
 const Promise = require('bluebird')
 const mongoose = require('mongoose')
+const logger = require('./logger')
 Promise.promisifyAll(mongoose)
 mongoose.Promise = Promise
 
@@ -13,15 +14,16 @@ function connect() {
 
     return mongoose.connect(uri)
         .then(() => {
-            console.log('Successfully connected to database!')
+            logger.info('Successfully connected to database! uri: %s', uri)
         })
 }
 
 function disconnect() {
     return mongoose.disconnect()
         .then(() => {
-            console.log('Successfully disconnected')
+            logger.info('Successfully disconnected')
         })
 }
 
 module.exports.connect = connect
+module.exports.disconnect = disconnect
