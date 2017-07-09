@@ -8,7 +8,10 @@ const randomString = require('./../helpers/randomString')
 function getAll(req, res, next) {
     CacheModel.find({})
         .then((data) => {
-            return res.json(data)
+            const keys = data.map((item) => item.key)
+            return res.json({
+                data: keys,
+            })
         })
         .catch(next)
 }
@@ -16,7 +19,9 @@ function getAll(req, res, next) {
 function deleteAll(req, res, next) {
     CacheModel.remove({})
         .then((responce) => {
-            return res.json(responce)
+            return res.json({
+                data: responce,
+            })
         })
         .catch(next)
 }
@@ -27,19 +32,21 @@ function getByKey(req, res, next) {
         .then((data) => {
             if (data) {
                 logger.info('Cache hit')
-                // TODO: update TTL
-                return data
+                return CacheModel.updateByKey(key, data) // update TTL
             }
 
             logger.info('Cache miss')
-            const randomStr = randomString()
             const cache = new CacheModel({
                 key: key,
-                data: randomStr,
-                TTL: new Date(),
+                data: randomString(),
             })
 
-            return cache.save()
+            const error = cache.validateSync() // validate
+            if (error) {
+                return next(new httpErrors.BadRequest(error.message))
+            }
+
+            return cache.save() // save
         })
         .then((cache) => {
             return res.json({
@@ -56,7 +63,6 @@ function updateByKey(req, res, next) {
     const cache = new CacheModel({
         key: key,
         data: data,
-        TTL: new Date(),
     })
 
     const error = cache.validateSync()
@@ -64,11 +70,7 @@ function updateByKey(req, res, next) {
         return next(new httpErrors.BadRequest(error.message))
     }
 
-    const cacheObj = cache.toObject()
-    delete cacheObj._id
-
-    return CacheModel
-        .findOneAndUpdate({key: key}, cacheObj, {upsert: true, new: true})
+    return CacheModel.updateByKey(key, cache.toObject())
         .then((cache) => {
             return res.json({
                 data: cache.data,
