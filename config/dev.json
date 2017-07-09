@@ -1,0 +1,11 @@
+{
+    "db": {
+        "port": 27017,
+        "host": "localhost",
+        "database": "vs_cache",
+        "username": "",
+        "password": "",
+        "authdb": ""
+    },
+    "port": 3000
+}

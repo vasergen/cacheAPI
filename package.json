@@ -4,12 +4,12 @@
   "description": "cache API",
   "main": "index.js",
   "scripts": {
-    "start": "npm run lint && node app/api.js | ./node_modules/.bin/bunyan",
-    "test": "npm run test-unit && npm run test-e2e",
+    "start": "export NODE_ENV=dev || set NODE_ENV=dev npm run lint && node app/api.js | ./node_modules/.bin/bunyan",
+    "test": "export NODE_ENV=test || set NODE_ENV=test npm run test-unit && npm run test-e2e",
     "lint": "./node_modules/.bin/eslint app",
     "lintfix": "./node_modules/.bin/eslint app --fix",
-    "test-unit": "./node_modules/mocha/bin/mocha app/test/unit/",
-    "test-e2e": "./node_modules/mocha/bin/mocha app/test/e2e/ --timeout 15000"
+    "test-unit": "export NODE_ENV=test || set NODE_ENV=test ./node_modules/mocha/bin/mocha app/test/unit/",
+    "test-e2e": "export NODE_ENV=test || set NODE_ENV=test ./node_modules/mocha/bin/mocha app/test/e2e/ --timeout 15000"
   },
   "repository": {
     "type": "git",

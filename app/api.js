@@ -1,4 +1,5 @@
 'use strict'
+process.env.NODE_ENV = process.env.NODE_ENV || 'dev'
 
 const logger = require('./service/logger')
 const server = require('./server')
