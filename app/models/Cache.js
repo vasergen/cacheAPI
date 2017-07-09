@@ -53,7 +53,7 @@ CacheSchema.statics.updateByKey = function(key, data) {
  * Check old cache and remove if needed
  */
 CacheSchema.statics.checkOldCache = function(count) {
-    this.count({})
+    return this.count({})
         .then((cacheCount) => {
             logger.info('checkOldCache, cacheCount: %s maxCount: %s', cacheCount, count)
             if (+cacheCount >= +count) {
